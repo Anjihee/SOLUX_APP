@@ -21,7 +21,6 @@ class LoginActivity : ComponentActivity() {
         btnJoin.setOnClickListener {
             startActivity(intent)
         }
-
     }
 }
 

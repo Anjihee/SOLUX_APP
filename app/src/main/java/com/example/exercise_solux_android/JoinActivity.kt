@@ -17,7 +17,7 @@ class JoinActivity : ComponentActivity() {
     private val mAuth: FirebaseAuth = FirebaseAuth.getInstance() //회원가입 파이어베이스 연동
     private val mStore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
-    object FirebaseID { //회원가입 정보
+    object FirebaseID { //파이어베이스 회원가입 정보
         const val email = "email"
         const val password = "password"
         const val nickname = "nickname"
