@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "232940271606",
+    "project_id": "surround-0726",
+    "storage_bucket": "surround-0726.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:232940271606:android:9d8cb900d9f61cfdff79d7",
+        "android_client_info": {
+          "package_name": "com.example.exercise_solux_android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "232940271606-ketqrlll8g9plsgqj6mhlgn6cl89vh3d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCMS_2BCQoZLuZQeQnNv7hGpwswy6Xvmg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "232940271606-ketqrlll8g9plsgqj6mhlgn6cl89vh3d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
