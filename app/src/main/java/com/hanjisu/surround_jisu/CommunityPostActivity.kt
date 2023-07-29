@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.ListView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 data class CommentData(val userName: String, val time: String, val comment: String, val profileId: Int)
 
@@ -13,17 +15,20 @@ class CommunityPostActivity : AppCompatActivity() {
         setContentView(R.layout.activity_community_post)
 
         val btnLike: ImageButton = findViewById(R.id.btnLike)
-        btnLike.setOnClickListener{ // 좋아요 버튼 기능 구현
+        btnLike.setOnClickListener{// 좋아요 버튼 기능 구현
             btnLike.isSelected = !btnLike.isSelected
         }
 
         val commentList = createCommentList() // 댓글 데이터 -> 리스트 생성
-        val commentListView = findViewById<ListView>(R.id.commentsList) // 액티비티의 댓글 리스트뷰
+        val commentListView = findViewById<RecyclerView>(R.id.commentsList) // 액티비티의 댓글 리사이클러뷰
         val commentListAdapter = CommentListAdapter(this, commentList) // 생성된 댓글 리스트 -> ListAdapter 클래스
         commentListView.adapter = commentListAdapter
+        commentListAdapter.notifyDataSetChanged()
+        // LinearLayoutManager를 사용하여 세로로 아이템들을 배치하도록 설정
+        commentListView.layoutManager = LinearLayoutManager(this)
     }
 
-    private fun createCommentList(): List<CommentData>{
+    private fun createCommentList(): List<CommentData> {
         // 더미 데이터를 생성하여 CommentData 객체를 생성하고 리스트에 담아 반환하는 메서드
         val dummyDataList = mutableListOf<CommentData>()
 

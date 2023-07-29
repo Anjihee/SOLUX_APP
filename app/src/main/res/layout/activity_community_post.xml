@@ -26,8 +26,8 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ScrollView
-        android:layout_width="0dp"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:contentDescription="Scroll Post"
         app:layout_constraintBottom_toTopOf="@+id/bottomBar"
@@ -35,167 +35,168 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topBar">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/goodsImage"
-                android:scaleType="centerCrop"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/dog" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/profile"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="18dp"
-                    android:elevation="6dp"
-                    app:cardCornerRadius="100dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:id="@+id/userProfile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/icon" />
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:id="@+id/userName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
-                    android:text="안딸기"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    app:layout_constraintStart_toEndOf="@+id/profile"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/userAddress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:text="이태원 2동"
-                    android:textColor="@color/colorGrey"
-                    android:textSize="15sp"
-                    app:layout_constraintStart_toEndOf="@+id/profile"
-                    app:layout_constraintTop_toBottomOf="@+id/userName" />
-
-                <TextView
-                    android:id="@+id/postTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:text="저희집 강아지 구경하세요"
-                    android:textSize="25sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/profile" />
-
-                <TextView
-                    android:id="@+id/postCategory"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="5dp"
-                    android:text="취미생활"
-                    android:textColor="@color/colorGrey"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/postTitle" />
-
-                <TextView
-                    android:id="@+id/postTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:text="1시간 전"
-                    android:textColor="@color/colorGrey"
-                    app:layout_constraintStart_toEndOf="@+id/postCategory"
-                    app:layout_constraintTop_toBottomOf="@+id/postTitle" />
-
-                <TextView
-                    android:id="@+id/postContents"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="50dp"
-                    android:text="저희 집 강아지 정말 귀여워요\n말랑해요\n따끈해요\n님들은 이런 강아지 없죠?"
-                    android:textSize="20sp"
-                    android:textColor="@color/black"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/postTitle" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/profile"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="18dp"
+                android:elevation="6dp"
+                app:cardCornerRadius="100dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/goodsImage">
 
                 <ImageView
-                    android:id="@+id/likeIcon"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="40dp"
-                    android:background="@drawable/like"
-                    android:contentDescription="Like"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/postContents" />
-
-                <TextView
-                    android:id="@+id/likeNum"
+                    android:id="@+id/userProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="37dp"
-                    android:text="5"
-                    android:textSize="20sp"
-                    android:textColor="@color/black"
-                    app:layout_constraintStart_toEndOf="@+id/likeIcon"
-                    app:layout_constraintTop_toBottomOf="@+id/postContents" />
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/icon" />
+            </androidx.cardview.widget.CardView>
 
-                <ImageButton
-                    android:id="@+id/commentsIcon"
-                    android:layout_width="30dp"
-                    android:layout_height="25dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="40dp"
-                    android:background="@drawable/comments"
-                    android:contentDescription="Comments"
-                    app:layout_constraintStart_toEndOf="@+id/likeNum"
-                    app:layout_constraintTop_toBottomOf="@+id/postContents" />
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:text="안딸기"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/profile"
+                app:layout_constraintTop_toBottomOf="@+id/goodsImage" />
 
-                <TextView
-                    android:id="@+id/commentsNum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="37dp"
-                    android:text="2"
-                    android:textSize="20sp"
-                    android:textColor="@color/black"
-                    app:layout_constraintStart_toEndOf="@+id/commentsIcon"
-                    app:layout_constraintTop_toBottomOf="@+id/postContents" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/userAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:text="이태원 2동"
+                android:textColor="@color/colorGrey"
+                android:textSize="15sp"
+                app:layout_constraintStart_toEndOf="@+id/profile"
+                app:layout_constraintTop_toBottomOf="@+id/userName" />
 
-            <ListView
+            <TextView
+                android:id="@+id/postTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="저희집 강아지 구경하세요"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profile" />
+
+            <TextView
+                android:id="@+id/postCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:text="취미생활"
+                android:textColor="@color/colorGrey"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/postTitle" />
+
+            <TextView
+                android:id="@+id/postTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:text="1시간 전"
+                android:textColor="@color/colorGrey"
+                app:layout_constraintStart_toEndOf="@+id/postCategory"
+                app:layout_constraintTop_toBottomOf="@+id/postTitle" />
+
+            <TextView
+                android:id="@+id/postContents"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="50dp"
+                android:text="저희 집 강아지 정말 귀여워요\n말랑해요\n따끈해요\n님들은 이런 강아지 없죠?"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/postTitle" />
+
+            <ImageView
+                android:id="@+id/likeIcon"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/like"
+                android:contentDescription="Like"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/postContents" />
+
+            <TextView
+                android:id="@+id/likeNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="37dp"
+                android:text="5"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/likeIcon"
+                app:layout_constraintTop_toBottomOf="@+id/postContents" />
+
+            <ImageButton
+                android:id="@+id/commentsIcon"
+                android:layout_width="30dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/comments"
+                android:contentDescription="Comments"
+                app:layout_constraintStart_toEndOf="@+id/likeNum"
+                app:layout_constraintTop_toBottomOf="@+id/postContents" />
+
+            <TextView
+                android:id="@+id/commentsNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="37dp"
+                android:text="2"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/commentsIcon"
+                app:layout_constraintTop_toBottomOf="@+id/postContents" />
+
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/commentsList"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </ListView>
-        </LinearLayout>
-    </ScrollView>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/likeIcon" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottomBar"
@@ -270,7 +271,6 @@
             app:layout_constraintEnd_toEndOf="@+id/btnChat"
             app:layout_constraintStart_toStartOf="@+id/btnChat"
             app:layout_constraintTop_toTopOf="@+id/btnChat" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
