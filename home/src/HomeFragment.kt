@@ -1,34 +1,31 @@
 package com.seonah.solux_surround_mycommunitylog
 
+import android.app.Activity
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.PopupMenu
+import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.seonah.solux_surround_mycommunitylog.databinding.ActivityCommunityLogBinding
-import com.seonah.solux_surround_mycommunitylog.databinding.CommunityLogPostsItemBinding
-import com.seonah.solux_surround_mycommunitylog.databinding.FragmentCommunityLogPostsBinding
+
 import com.seonah.solux_surround_mycommunitylog.databinding.FragmentHomeBinding
 import com.seonah.solux_surround_mycommunitylog.databinding.HomeCommunityItemBinding
 import com.seonah.solux_surround_mycommunitylog.databinding.HomeMarektItemBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
@@ -37,6 +34,10 @@ class HomeFragment : Fragment() {
     private lateinit var communityRecyclerView: RecyclerView
     private lateinit var adapterForMarket: HomeMarketAdapter
     private lateinit var adapterForCommunity:HomeCommunityAdapter
+
+
+    //설정된 사용자 위치를 가져오기 위한 상수
+    private val LOCATION_REQUEST_CODE = 1001
 
 
     override fun onCreateView(
@@ -83,8 +84,67 @@ class HomeFragment : Fragment() {
         adapterForCommunity.setData(communityData)
 
 
+
+//        ---------------------사용자 위치 설정 기능 -------------------------------
+        binding.userLocationArea.setOnClickListener{
+            showDropdownMenu(it)
+        }
+
+
     }
 
+
+    //검색 동작 처리를 위한 메소드
+//    private fun handleSearchAction(searchText:String){
+//
+//        val intent = Intent(requireContext(), MarketActivity::class.java)
+//        //MarketPostActivity로 검색 텍스트를 전달
+//        intent.putExtra("searchText", searchText)
+//        startActivity(intent)
+//    }
+
+    //사용자 위치 Dropdown 메뉴를 보여주는 함수
+    private fun showDropdownMenu(view:View){
+        val popupMenu=PopupMenu(requireContext(),view)
+        popupMenu.inflate(R.menu.location_dropdown_menu) //menu layout
+
+        // Dropdown 메뉴의 아이템 클릭 이벤트 처리
+        popupMenu.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.setUserLocation -> {
+                    goSetLocationPage()
+                    true
+                }
+
+                else -> false
+            }
+        }
+        //Dropdown 메뉴가 보여질 위치 조절
+        popupMenu.gravity=Gravity.START
+        popupMenu.show()
+
+    }
+    //사용자 위치 설정 페이지로 이동하기 위한 메소드
+    fun goSetLocationPage(){
+        val intent = Intent(requireContext(), SetLocationActivity::class.java)
+        startActivityForResult(intent, LOCATION_REQUEST_CODE)// 위치 설정 액티비티 호출
+    }
+
+    //사용자 위치 설정 페이지에서 설정된 위치를 home에도 적용
+
+    // 위치 설정 액티비티로부터 결과를 받아오는 콜백 메소드
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == LOCATION_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val currentStreetAddress = data?.getStringExtra("CURRENT_ADDRESS")
+            if (!currentStreetAddress.isNullOrEmpty()) {
+                // SetLocationActivity로부터 전달받은 주소를 화면에 업데이트
+                binding.userLocationText.text = currentStreetAddress
+            }
+        }
+    }
+
+    //공동구매 게시글 데이터를 가져오기 위한 메소드
     private fun getMarketData(): List<MarektPostModel> {
         // Replace with your own implementation to retrieve data for the RecyclerView
         // This method should return a list of YourData objects
@@ -105,6 +165,7 @@ class HomeFragment : Fragment() {
         )
     }
 
+    //커뮤니티 게시글 데이터를 가져오기 위한 메소드
     private fun getCommunityData(): List<CommunityPostModel> {
         // Replace with your own implementation to retrieve data for the RecyclerView
         // This method should return a list of YourData objects
@@ -232,6 +293,7 @@ class HomeFragment : Fragment() {
 
         }
     }
+
 
 }
 
