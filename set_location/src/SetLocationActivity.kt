@@ -12,6 +12,7 @@ import android.location.Location
 import com.google.android.gms.location.LocationRequest
 import android.os.Bundle
 import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -42,9 +43,30 @@ class SetLocationActivity : AppCompatActivity() {
         binding = ActivitySetLocationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         searchView = binding.searchView
-        searchView.setIconifiedByDefault(false)
-        searchView.queryHint = "동명 (예: 청파동)으로 검색하기"
+
+        //뒤로가기 버튼 이벤트
+        binding.prevPageBtn.setOnClickListener{
+            if(searchView.hasFocus()){
+                //검색창이 활성화 되어 있을 땐 검색창을 초기화하고
+                searchView.setQuery("", false)
+                //키보드를 숨김
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(searchView.windowToken, 0)
+
+                searchView.clearFocus()
+                Log.d(TAG, "searchView Focus : ${searchView.hasFocus()}")
+
+            }
+            else{
+                // 검색창이 비활성화 되어 있을시엔
+                // SetLocationActivity를 종료하여 이전 화면으로 돌아감
+                Log.d(TAG, "setLocationActivity is finished")
+                finish()
+            }
+
+        }
 
 //        -------------------- 사용자 위치 찾기 ------------------
         getUserLocation(object : LocationCallback {
@@ -113,10 +135,13 @@ class SetLocationActivity : AppCompatActivity() {
 
     //homeFragment로 돌아감
     override fun onBackPressed() {
+        // HomeFragment로 돌아가기 위해 현재 설정된 위치 주소를 가져옴
         val currentStreetAddress = binding.userLocationText.text.toString()
         val intent = Intent()
+        //Intent에 현재 설정된 위치 주소를 넣음
         intent.putExtra("CURRENT_ADDRESS", currentStreetAddress)
         setResult(Activity.RESULT_OK, intent)
+        // SetLocationActivity를 종료하여 이전 화면으로 돌아감
         super.onBackPressed()
     }
 
