@@ -69,9 +69,14 @@ class SetLocationActivity : AppCompatActivity() {
         }
 
 //        -------------------- 사용자 위치 찾기 ------------------
+        // Initialize fusedLocationClient and geocoder
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        geocoder = Geocoder(this, Locale.KOREAN)
+
+// Get user's location and update the UI
         getUserLocation(object : LocationCallback {
             override fun onLocationReceived(currentStreetAddress: String?) {
-                binding.userLocationText.text=currentStreetAddress
+                binding.userLocationText.text = currentStreetAddress
             }
         })
 
@@ -94,44 +99,41 @@ class SetLocationActivity : AppCompatActivity() {
         fun onLocationReceived(currentStreetAddress: String?)
     }
 
-
     private fun getUserLocation(callback: LocationCallback) {
-
-        // FusedLocationProviderClient 초기화
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        //Geocoder 초기화
-        geocoder=Geocoder(this,Locale.KOREAN)
-
-        //위치 권한이 허용되었는지 확인하고, 허용되지 않았다면 사용자에게 요청
-        if(ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),10101)
+        // Check for location permission
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                10101
+            )
         }
 
-        val lastLocation=fusedLocationClient.lastLocation
-        //위치 정보 가져오기를 성공했을 떄
-        lastLocation.addOnSuccessListener {
-            Log.d(TAG, "getLastLocation: Latitude ${it.latitude}, Longitude: ${it.longitude}")
+        // Get last known location
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location ->
+                // If the location is not null, convert it to an address
+                if (location != null) {
+                    val addressList = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                    if (addressList!!.isNotEmpty()) {
+                        val currentStreetAddress = addressList?.get(0)?.thoroughfare
+                        callback.onLocationReceived(currentStreetAddress)
 
-            val address=geocoder.getFromLocation(it.latitude,it.longitude,1)
-            val currentStreetAddress=address?.get(0)?.thoroughfare
-
-            Log.d(TAG,"getLastLocation:${address?.get(0)?.getAddressLine(0)}")
-            Log.d(TAG,"getLastLocation:${currentStreetAddress}")
-
-            binding.userLocationText.text=currentStreetAddress
-
-            callback.onLocationReceived(currentStreetAddress)
-
-        }
-
-        //실패했을 때
-        lastLocation.addOnFailureListener{
-            Log.d(TAG,"getLastLocation:Failed to load")
-            callback.onLocationReceived(null)
-        }
-
-
+                    }
+                } else {
+                    callback.onLocationReceived(null)
+                }
+            }
+            .addOnFailureListener {
+                callback.onLocationReceived(null)
+            }
     }
+
+
 
     //homeFragment로 돌아감
     override fun onBackPressed() {
