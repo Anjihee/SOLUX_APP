@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Surround2023" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.Surround2023.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/themeGreen</item>
+        <item name="windowSplashScreenAnimationDuration">200</item>
+        <item name="postSplashScreenTheme">@style/Theme.Surround2023</item>
+    </style>
+
+</resources>
