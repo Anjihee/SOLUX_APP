@@ -220,30 +220,20 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.515" />
 
-        <ImageButton
-            android:id="@+id/btnChat"
+        <Button
+            android:id="@+id/btnJoin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:background="@drawable/chat"
-            android:text="채팅하기"
-            android:contentDescription="Chat"
+            android:background="@drawable/button1"
+            android:text="참여하기"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:contentDescription="Join"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textBtnChat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="채팅하기"
-            android:textSize="17sp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/btnChat"
-            app:layout_constraintEnd_toEndOf="@+id/btnChat"
-            app:layout_constraintStart_toStartOf="@+id/btnChat"
-            app:layout_constraintTop_toTopOf="@+id/btnChat" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
