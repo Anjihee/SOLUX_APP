@@ -1,6 +1,9 @@
 package com.seonah.solux_surround_mycommunitylog
 
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -12,6 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.seonah.solux_surround_mycommunitylog.databinding.ActivityCommunityLogBinding
+import java.security.MessageDigest
 
 class CommunityLogActivity : AppCompatActivity() {
     private val TAG = "로그"
@@ -20,7 +24,6 @@ class CommunityLogActivity : AppCompatActivity() {
 
     //하단 Nav 와 관련된 변수
     private lateinit var bottomNavView: BottomNavigationView
-    private lateinit var bottomMenuContainer: FrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -29,6 +32,7 @@ class CommunityLogActivity : AppCompatActivity() {
         binding = ActivityCommunityLogBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Log.d(TAG, "MainActivity - onCreate() called")
+//        getAppKeyHash()   //카카오맵 api 사용을 위한 해시키 얻기
 
 //        ------------------게시글/댓글 탭에 대한 기능 구현 ---------------------------
         val viewPager: ViewPager2 = binding.viewPager
@@ -50,11 +54,18 @@ class CommunityLogActivity : AppCompatActivity() {
 
 //        ---------------------BottomNavigationView에 대한 기능 ---------------
         bottomNavView = binding.bottomNavView
-        setListeners()
-        //맨 처음 시작할 탭 설정
-//        bottomNavView.selectedItemId = R.id.menu_home
-        bottomMenuContainer = findViewById(R.id.bottomMenuContainer)
-        hideBottomMenuContainer()
+        bottomNavView.setOnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menu_home -> {
+                    // "menu_home" 아이템 클릭 시 HomeActivity로 이동
+                    val intent = Intent(this, HomeActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                // 다른 메뉴 아이템에 대한 처리 추가 (필요에 따라 다른 Activity로 이동할 수 있음)
+                else -> false
+            }
+        }
 
 
         //------ 하단 네비게이션 기본 소프트키 안보이게--------------------------
@@ -73,57 +84,31 @@ class CommunityLogActivity : AppCompatActivity() {
 
     }
 
-    private fun setListeners() {
-        //선택 리스너 등록
-        bottomNavView.setOnNavigationItemSelectedListener(TabSelectedListener())
-    }
 
-    inner class TabSelectedListener : BottomNavigationView.OnNavigationItemSelectedListener {
-        override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
 
-            when (menuItem.itemId) {
-                R.id.menu_home, R.id.menu_favorite, R.id.menu_addPost, R.id.menu_chat, R.id.menu_mypage -> {
-                    showBottomMenuContainer()
-                    showFragment(menuItem.itemId) // 해당 Fragment 표시
-                    hideTabLayoutAndViewPager() // tabLayout과 ViewPager 숨김
-                    return true
-                }
-                // 다른 탭에 대한 처리...
-                else -> return false
-            }
-        }
 
-        private fun showFragment(itemId: Int) {
-            val fragment: Fragment = when (itemId) {
-                R.id.menu_home -> HomeFragment()
-                R.id.menu_favorite -> FavoriteFragment()
-                R.id.menu_addPost -> AddPostFragment()
-                R.id.menu_chat -> ChatFragment()
-                R.id.menu_mypage -> MypageFragment()
-                else -> HomeFragment() // 기본적으로 HomeFragment를 표시
-            }
 
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.bottomMenuContainer, fragment)
-                .commit()
 
-        }
 
-        private fun hideTabLayoutAndViewPager() {
-            binding.tabLayout.visibility = View.GONE
-            binding.viewPager.visibility = View.GONE
-        }
 
-    }
 
-    private fun hideBottomMenuContainer() {
-        bottomMenuContainer.visibility = View.GONE
-    }
-
-    private fun showBottomMenuContainer() {
-        bottomMenuContainer.visibility = View.VISIBLE
-    }
-
+    //해시키 얻기
+//    private fun getAppKeyHash() {
+//        try {
+//            val info =
+//                packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
+//            for (signature in info.signatures) {
+//                var md: MessageDigest
+//                md = MessageDigest.getInstance("SHA")
+//                md.update(signature.toByteArray())
+//                val something = String(Base64.encode(md.digest(), 0))
+//                Log.e("Hash key", something)
+//            }
+//        } catch (e: Exception) {
+//
+//            Log.e("name not found", e.toString())
+//        }
+//    }
 
 }
 
