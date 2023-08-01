@@ -2,33 +2,39 @@ package com.seonah.solux_surround_mycommunitylog
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.ContextThemeWrapper
 import android.view.Gravity
-import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
+import android.view.WindowManager
+import android.widget.FrameLayout
 import android.widget.PopupMenu
-import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.GravityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.seonah.solux_surround_mycommunitylog.databinding.ActivityHomeBinding
 
-import com.seonah.solux_surround_mycommunitylog.databinding.FragmentHomeBinding
 import com.seonah.solux_surround_mycommunitylog.databinding.HomeCommunityItemBinding
 import com.seonah.solux_surround_mycommunitylog.databinding.HomeMarektItemBinding
 
 
-class HomeFragment : Fragment() {
+class HomeActivity : AppCompatActivity() {
 
-    private lateinit var binding: FragmentHomeBinding
+    private lateinit var binding: ActivityHomeBinding
+
+    //하단 Nav 와 관련된 변수
+    private lateinit var bottomNavView: BottomNavigationView
+
     //리사이클러뷰
     private lateinit var marketRecyclerView: RecyclerView
     private lateinit var communityRecyclerView: RecyclerView
@@ -40,26 +46,45 @@ class HomeFragment : Fragment() {
     private val LOCATION_REQUEST_CODE = 1001
 
 
-    override fun onCreateView(
-        //뷰가 화면에 그려질 때
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        binding= FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        binding= ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-//-------------------------------리사이클러뷰-------------------------
+        // 소프트키(네비게이션 바), 상태바를 숨기기 위한 플래그 설정
+        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
+
+
+        //        ---------------------BottomNavigationView에 대한 기능 ---------------
+        bottomNavView = binding.bottomNavView
+        bottomNavView.setOnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menu_home -> {
+                    // "menu_home" 아이템 클릭 시 HomeActivity로 이동
+                    val intent = Intent(this, HomeActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                // 다른 메뉴 아이템에 대한 처리 추가 (필요에 따라 다른 Activity로 이동할 수 있음)
+                else -> false
+            }
+        }
+
+        //-------------------------------리사이클러뷰-------------------------
         // Initialize RecyclerView
         marketRecyclerView= binding.marketRecycler
         communityRecyclerView=binding.communityRecycler
 
         //커뮤니티 리사이클러뷰 레이아웃매니저
-        val communityLayoutManager = LinearLayoutManager(requireContext())
+        val communityLayoutManager = LinearLayoutManager(this)
         communityRecyclerView.layoutManager = communityLayoutManager
 
 
@@ -76,7 +101,7 @@ class HomeFragment : Fragment() {
         // Populate data
         val marketData = getMarketData() // Replace with your data source
         //공동구매 리사이클러뷰 레이아웃매니저
-        val marketLayoutManager=GridLayoutManager(requireContext(), 2, RecyclerView.HORIZONTAL, false)
+        val marketLayoutManager=GridLayoutManager(this, 2, RecyclerView.HORIZONTAL, false)
         marketRecyclerView.layoutManager=marketLayoutManager
         adapterForMarket.setData(marketData)
 
@@ -94,6 +119,13 @@ class HomeFragment : Fragment() {
     }
 
 
+
+
+
+
+
+
+
     //검색 동작 처리를 위한 메소드
 //    private fun handleSearchAction(searchText:String){
 //
@@ -105,8 +137,9 @@ class HomeFragment : Fragment() {
 
     //사용자 위치 Dropdown 메뉴를 보여주는 함수
     private fun showDropdownMenu(view:View){
-        val popupMenu=PopupMenu(requireContext(),view)
-        popupMenu.inflate(R.menu.location_dropdown_menu) //menu layout
+
+        val popupMenu = PopupMenu(this,view)
+        popupMenu.menuInflater.inflate(R.menu.location_dropdown_menu,popupMenu.menu) //menu layout
 
         // Dropdown 메뉴의 아이템 클릭 이벤트 처리
         popupMenu.setOnMenuItemClickListener { menuItem ->
@@ -120,13 +153,29 @@ class HomeFragment : Fragment() {
             }
         }
         //Dropdown 메뉴가 보여질 위치 조절
-        popupMenu.gravity=Gravity.START
+//        popupMenu.gravity=Gravity.START
         popupMenu.show()
 
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.setUserLocation -> {
+                // 하단 소프트키 숨기기
+                window.setFlags(
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+
+                return true
+            }
+            // 다른 메뉴 항목에 대한 처리
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
     //사용자 위치 설정 페이지로 이동하기 위한 메소드
     fun goSetLocationPage(){
-        val intent = Intent(requireContext(), SetLocationActivity::class.java)
+        val intent = Intent(this, SetLocationActivity::class.java)
         startActivityForResult(intent, LOCATION_REQUEST_CODE)// 위치 설정 액티비티 호출
     }
 
@@ -183,7 +232,7 @@ class HomeFragment : Fragment() {
     }
 
     //공동구매 리사이클러뷰 어댑터
-    class HomeMarketAdapter: RecyclerView.Adapter<HomeFragment.HomeMarketViewHolder>(){
+    class HomeMarketAdapter: RecyclerView.Adapter<HomeActivity.HomeMarketViewHolder>(){
         private val data = mutableListOf<MarektPostModel>()
 
         fun setData(newData: List<MarektPostModel>) {
@@ -239,7 +288,7 @@ class HomeFragment : Fragment() {
     }
 
     //커뮤니티 리사이클러뷰 어댑터
-    class HomeCommunityAdapter: RecyclerView.Adapter<HomeFragment.HomeCommunityViewHolder>(){
+    class HomeCommunityAdapter: RecyclerView.Adapter<HomeActivity.HomeCommunityViewHolder>(){
         private val data = mutableListOf<CommunityPostModel>()
 
         fun setData(newData: List<CommunityPostModel>) {
