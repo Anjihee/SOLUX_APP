@@ -74,4 +74,14 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
+
+    //메일 보내기 기능
+//    implementation files('libs/activation.jar')
+//    implementation files('libs/additionnal.jar')
+//    implementation files('libs/mail.jar')
+    // 카카오 로그인
+    implementation 'com.kakao.sdk:v2-user:2.15.0'
+    apply plugin: 'com.google.gms.google-services'
 }

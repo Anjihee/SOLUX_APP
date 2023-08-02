@@ -6,6 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/back_button"
+        app:layout_constraintBottom_toTopOf="@+id/textHello"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.35"
+        app:layout_constraintHorizontal_bias="0.027"/>
+
     <TextView
         android:id="@+id/textHello"
         android:layout_width="wrap_content"
@@ -53,7 +65,7 @@
         android:id="@+id/Authentication"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:background="@drawable/green_background"
+        android:background="@drawable/selector_green_background"
         android:text="인증"
         android:textSize="13sp"
         app:layout_constraintBottom_toTopOf="@+id/textEmail2"
@@ -80,7 +92,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/Email2"
+        android:id="@+id/Code"
         android:layout_width="250dp"
         android:layout_height="40dp"
         android:layout_centerHorizontal="true"
@@ -95,12 +107,12 @@
         android:id="@+id/AuthConfrim"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:background="@drawable/green_background"
+        android:background="@drawable/selector_green_background"
         android:text="확인"
         android:textSize="13sp"
         app:layout_constraintBottom_toTopOf="@+id/textEmailConfirm"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/Email2"
+        app:layout_constraintStart_toEndOf="@+id/Code"
         app:layout_constraintTop_toBottomOf="@+id/textEmail2"
         app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintVertical_bias="0.0"/>
@@ -118,7 +130,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Email2"
+        app:layout_constraintTop_toBottomOf="@id/Code"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
@@ -215,7 +227,7 @@
         android:id="@+id/btnJoin"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/green_background"
+        android:background="@drawable/selector_green_background"
         android:text="계정만들기"
         android:textColor="@color/white"
         android:textSize="17sp"
