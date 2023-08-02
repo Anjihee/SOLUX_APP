@@ -4,19 +4,14 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.ContextThemeWrapper
-import android.view.Gravity
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.FrameLayout
 import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +21,7 @@ import com.seonah.solux_surround_mycommunitylog.databinding.ActivityHomeBinding
 
 import com.seonah.solux_surround_mycommunitylog.databinding.HomeCommunityItemBinding
 import com.seonah.solux_surround_mycommunitylog.databinding.HomeMarektItemBinding
+import com.seonah.solux_surround_mycommunitylog.set_location.SetLocationActivity
 
 
 class HomeActivity : AppCompatActivity() {
