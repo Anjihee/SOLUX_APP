@@ -3,8 +3,8 @@
     <color name="themeGreen">#97BF04</color>
     <color name="subYellowGreen">#D6D982</color>
     <color name="subDeepGreen">#93A603</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <color name="colorGrey">#999999</color>
+    <color name="colorColorGrey">#E3E3E3</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>
