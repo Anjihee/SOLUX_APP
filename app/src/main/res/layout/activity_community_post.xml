@@ -145,8 +145,10 @@
                 android:layout_height="25dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="40dp"
+                android:layout_marginBottom="30dp"
                 android:background="@drawable/like"
                 android:contentDescription="Like"
+                app:layout_constraintBottom_toTopOf="@+id/commentsList"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/postContents" />
 
@@ -189,12 +191,10 @@
                 android:id="@+id/commentsList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/likeIcon" />
+                app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
@@ -222,7 +222,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginStart="10dp"
-            android:background="@drawable/likebtn_selected"
+            android:background="@drawable/likebtn_selector"
             android:contentDescription="Like"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
