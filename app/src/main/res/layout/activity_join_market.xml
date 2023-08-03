@@ -94,15 +94,15 @@
 
                 <TextView
                     android:id="@+id/postTitle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200sp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="5dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:text="딸기 1키로 공구하실 분 구합니다"
                     android:textColor="@color/colorGrey"
                     android:textSize="18sp"
-                    android:maxLines="1"
-                    android:ellipsize="end"
                     app:layout_constraintStart_toEndOf="@+id/goodsImage"
                     app:layout_constraintTop_toBottomOf="@+id/perPrice" />
 
@@ -277,7 +277,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/line2" />
 
-                <RadioGroup
+                <androidx.gridlayout.widget.GridLayout
                     android:id="@+id/radioGroup1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -286,90 +286,74 @@
                     android:layout_marginEnd="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView22">
+                    app:layout_constraintTop_toBottomOf="@+id/textView22"
+                    app:columnCount="3"
+                    app:rowCount="2">
 
-                    <TableLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                    <RadioButton
+                        android:id="@+id/payCard"
+                        style="@style/SquareRadioButton"
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center"
+                        android:text="신용/체크카드"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                    <RadioButton
+                        android:id="@+id/payNaver"
+                        style="@style/SquareRadioButton"
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center"
+                        android:text="네이버페이"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
-                            <RadioButton
-                                android:id="@+id/payCard"
-                                style="@style/SquareRadioButton"
-                                android:background="@drawable/paybtn_selector"
-                                android:layout_width="100dp"
-                                android:layout_height="50dp"
-                                android:layout_marginRight="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:gravity="center"
-                                android:text="신용/체크카드"
-                                android:textColor="@color/black"
-                                android:textSize="15sp"
-                                android:textStyle="bold" />
+                    <RadioButton
+                        android:id="@+id/payKakao"
+                        style="@style/SquareRadioButton"
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center"
+                        android:text="카카오페이"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
-                            <RadioButton
-                                android:id="@+id/payNaver"
-                                style="@style/SquareRadioButton"
-                                android:background="@drawable/paybtn_selector"
-                                android:layout_width="100dp"
-                                android:layout_height="50dp"
-                                android:layout_marginRight="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:gravity="center"
-                                android:text="네이버페이"
-                                android:textColor="@color/black"
-                                android:textSize="15sp"
-                                android:textStyle="bold" />
+                    <RadioButton
+                        android:id="@+id/payPhone"
+                        style="@style/SquareRadioButton"
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center"
+                        android:text="휴대폰결제"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
-                            <RadioButton
-                                android:id="@+id/payKakao"
-                                style="@style/SquareRadioButton"
-                                android:background="@drawable/paybtn_selector"
-                                android:layout_width="100dp"
-                                android:layout_height="50dp"
-                                android:layout_marginBottom="10dp"
-                                android:gravity="center"
-                                android:text="카카오페이"
-                                android:textColor="@color/black"
-                                android:textSize="15sp"
-                                android:textStyle="bold" />
-                        </TableRow>
+                    <RadioButton
+                        android:id="@+id/payDeposit"
+                        style="@style/SquareRadioButton"
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center"
+                        android:text="무통장입금"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <RadioButton
-                                android:id="@+id/payPhone"
-                                style="@style/SquareRadioButton"
-                                android:background="@drawable/paybtn_selector"
-                                android:layout_width="100dp"
-                                android:layout_height="50dp"
-                                android:layout_marginRight="10dp"
-                                android:gravity="center"
-                                android:text="휴대폰결제"
-                                android:textColor="@color/black"
-                                android:textSize="15sp"
-                                android:textStyle="bold" />
-
-                            <RadioButton
-                                android:id="@+id/payDeposit"
-                                style="@style/SquareRadioButton"
-                                android:background="@drawable/paybtn_selector"
-                                android:layout_width="100dp"
-                                android:layout_height="50dp"
-                                android:layout_marginRight="10dp"
-                                android:gravity="center"
-                                android:text="무통장입금"
-                                android:textColor="@color/black"
-                                android:textSize="15sp"
-                                android:textStyle="bold" />
-                        </TableRow>
-                    </TableLayout>
-                </RadioGroup>
+                </androidx.gridlayout.widget.GridLayout>
 
                 <View
                     android:id="@+id/line3"

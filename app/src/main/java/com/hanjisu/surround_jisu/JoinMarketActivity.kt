@@ -10,6 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 
 class JoinMarketActivity : AppCompatActivity() {
+
+    private lateinit var radioButtons: Array<RadioButton>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_join_market)
@@ -21,50 +24,50 @@ class JoinMarketActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val radioGroup : RadioGroup = findViewById(R.id.radioGroup1)
-        val payCard : RadioButton = findViewById(R.id.payCard)
-        val payNaver : RadioButton = findViewById(R.id.payNaver)
-        val payKakao : RadioButton = findViewById(R.id.payKakao)
-        val payPhone : RadioButton = findViewById(R.id.payPhone)
-        val payDeposit : RadioButton = findViewById(R.id.payDeposit)
+        radioButtons = arrayOf( // RadioGroup 대신 GridLayout을 사용했으므로 임의의 배열을 선언해 묶어줌
+            findViewById<RadioButton>(R.id.payCard),
+            findViewById<RadioButton>(R.id.payNaver),
+            findViewById<RadioButton>(R.id.payKakao),
+            findViewById<RadioButton>(R.id.payPhone),
+            findViewById<RadioButton>(R.id.payDeposit)
+        )
 
-        radioGroup.setOnCheckedChangeListener { group, checkedId -> // 결제방법 선택 시
-            if (checkedId == R.id.payCard) { // 카드로 결제 선택
-                payCard.setBackgroundResource(R.drawable.selected_roundsquare)
-                payNaver.setBackgroundResource(R.drawable.roundsquare)
-                payKakao.setBackgroundResource(R.drawable.roundsquare)
-                payPhone.setBackgroundResource(R.drawable.roundsquare)
-                payDeposit.setBackgroundResource(R.drawable.roundsquare)
-            } else if (checkedId == R.id.payNaver) { // 네이버페이 결제 선택
-                payCard.setBackgroundResource(R.drawable.roundsquare)
-                payNaver.setBackgroundResource(R.drawable.selected_roundsquare)
-                payKakao.setBackgroundResource(R.drawable.roundsquare)
-                payPhone.setBackgroundResource(R.drawable.roundsquare)
-                payDeposit.setBackgroundResource(R.drawable.roundsquare)
-            } else if (checkedId == R.id.payKakao) { // 카카오페이 결제 선택
-                payCard.setBackgroundResource(R.drawable.roundsquare)
-                payNaver.setBackgroundResource(R.drawable.roundsquare)
-                payKakao.setBackgroundResource(R.drawable.selected_roundsquare)
-                payPhone.setBackgroundResource(R.drawable.roundsquare)
-                payDeposit.setBackgroundResource(R.drawable.roundsquare)
-            } else if (checkedId == R.id.payPhone) { // 휴대폰 결제 선택
-                payCard.setBackgroundResource(R.drawable.roundsquare)
-                payNaver.setBackgroundResource(R.drawable.roundsquare)
-                payKakao.setBackgroundResource(R.drawable.roundsquare)
-                payPhone.setBackgroundResource(R.drawable.selected_roundsquare)
-                payDeposit.setBackgroundResource(R.drawable.roundsquare)
-            } else if (checkedId == R.id.payDeposit) { // 무통장입금 결제 선택
-                payCard.setBackgroundResource(R.drawable.roundsquare)
-                payNaver.setBackgroundResource(R.drawable.roundsquare)
-                payKakao.setBackgroundResource(R.drawable.roundsquare)
-                payPhone.setBackgroundResource(R.drawable.roundsquare)
-                payDeposit.setBackgroundResource(R.drawable.selected_roundsquare)
-            } else { // 아무것도 선택 안됨
-                payCard.setBackgroundResource(R.drawable.roundsquare)
-                payNaver.setBackgroundResource(R.drawable.roundsquare)
-                payKakao.setBackgroundResource(R.drawable.roundsquare)
-                payPhone.setBackgroundResource(R.drawable.roundsquare)
-                payDeposit.setBackgroundResource(R.drawable.roundsquare)
+        for (radioButton in radioButtons) {
+            radioButton.setOnClickListener {
+                onRadioButtonClicked(radioButton)
+            }
+        }
+
+    }
+    fun onRadioButtonClicked(selectedButton: RadioButton) { // 한 번에 하나의 라디오버튼만 선택될 수 있도록 함수 선언
+        // 모든 버튼을 선택 해제
+        for (radioButton in radioButtons) {
+            radioButton.isChecked = false
+        }
+
+        // 선택된 버튼만 선택
+        selectedButton.isChecked = true
+
+        // 선택된 버튼에 대한 작업 수행
+        when (selectedButton.id) {
+            R.id.payCard -> {
+                // '신용/체크카드 결제' 선택 시 처리
+            }
+
+            R.id.payNaver -> {
+                // '네이버페이 결제' 선택 시 처리
+            }
+
+            R.id.payKakao -> {
+                // '카카오페이 결제' 선택 시 처리
+            }
+
+            R.id.payPhone -> {
+                // '휴대폰 결제' 선택 시 처리
+            }
+
+            R.id.payDeposit -> {
+                // '무통장입금 결제' 선택 시 처리
             }
         }
     }
