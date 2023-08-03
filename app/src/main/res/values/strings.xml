@@ -1,9 +1,3 @@
 <resources>
     <string name="app_name">My Application</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="some_id">
-\u00EB\u0094\u00B8\u00EA\u00B8\u00B0 1\u00ED\u0082\u00A4\u00EB\u00A1\u009C \u00EA\u00B3\u00B5\u00EA\u00B5\u00AC\u00ED\u0095\u0098\u00EC\u008B\u00A4...
-</string>
 </resources>
