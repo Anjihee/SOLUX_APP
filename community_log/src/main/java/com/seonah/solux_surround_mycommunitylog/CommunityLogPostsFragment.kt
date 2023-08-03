@@ -1,4 +1,4 @@
-package com.seonah.solux_surround_mycommunitylog
+package com.seonah.solux_surround_mycommunitylog.community_log
 
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.seonah.solux_surround_mycommunitylog.R
 import com.seonah.solux_surround_mycommunitylog.databinding.FragmentCommunityLogPostsBinding
 import com.seonah.solux_surround_mycommunitylog.databinding.CommunityLogPostsItemBinding
 
@@ -89,7 +90,7 @@ class CommunityLogPostsFragment: Fragment() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyPostViewHolder {
             val inflater = LayoutInflater.from(parent.context)
             val binding = CommunityLogPostsItemBinding.inflate(inflater, parent, false)
-            return MyPostViewHolder(binding)
+            return MyPostViewHolder(binding,this)
         }
 
         override fun onBindViewHolder(holder: MyPostViewHolder, position: Int) {
@@ -97,10 +98,17 @@ class CommunityLogPostsFragment: Fragment() {
         }
 
         override fun getItemCount(): Int = data.size
+
+        fun deleteItem(position: Int){
+            if (position != RecyclerView.NO_POSITION && position < data.size) {
+                data.removeAt(position)
+                notifyItemRemoved(position)
+            }
+        }
     }
 
     // 리사이클러뷰 아이템 모델에 대한 뷰홀더
-    private class MyPostViewHolder(private val binding: CommunityLogPostsItemBinding) :
+    private class MyPostViewHolder(private val binding: CommunityLogPostsItemBinding,private val adapter: MyPostAdapter) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: MyPostModel) {
@@ -130,16 +138,16 @@ class CommunityLogPostsFragment: Fragment() {
                 binding.postTextContainer.layoutParams = layoutParams
 
             }
-            // deleteBtn에 클릭 리스너 추가
+
+            // Set OnClickListener for deleteBtn
             binding.deleteBtn.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    // 데이터 리스트에서 아이템 제거
-                    data.removeAt(position)
-                    // 어댑터에 데이터 변경을 알림
-                    notifyItemRemoved(position)
+                    // Call the deleteItem method in the adapter to delete the item
+                    adapter.deleteItem(position)
                 }
             }
+
         }
         }
 
@@ -149,7 +157,6 @@ class CommunityLogPostsFragment: Fragment() {
 // 게시글 데이터 모델
 private data class MyPostModel(var postImg:String?=null, var postTitle:String?=null, var postDate:String?=null,
                                    var viewedNum:Int?=null, var commentsNum:Int?=null) {
-
 
     val TAG:String="로그"
 

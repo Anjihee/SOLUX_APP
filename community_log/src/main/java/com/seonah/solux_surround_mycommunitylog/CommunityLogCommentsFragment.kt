@@ -1,4 +1,4 @@
-package com.seonah.solux_surround_mycommunitylog
+package com.seonah.solux_surround_mycommunitylog.community_log
 
 import android.os.Bundle
 import android.util.Log
@@ -20,7 +20,7 @@ class CommunityLogCommentsFragment: Fragment() {
 
     //리사이클러뷰
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: CommunityLogCommentsFragment.MyCommentAdapter
+    private lateinit var adapter: MyCommentAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,7 +46,7 @@ class CommunityLogCommentsFragment: Fragment() {
         recyclerView.addItemDecoration(dividerItemDecoration)
 
         // Initialize Adapter
-        adapter = CommunityLogCommentsFragment.MyCommentAdapter()
+        adapter = MyCommentAdapter()
         recyclerView.adapter = adapter
 
         // Populate data
@@ -72,7 +72,7 @@ class CommunityLogCommentsFragment: Fragment() {
     }
 
     // Replace YourAdapter with your own adapter implementation
-    private class MyCommentAdapter : RecyclerView.Adapter<CommunityLogCommentsFragment.MyCommentViewHolder>() {
+    private class MyCommentAdapter : RecyclerView.Adapter<MyCommentViewHolder>() {
         private val data = mutableListOf<MyCommentModel>()
 
         fun setData(newData: List<MyCommentModel>) {
@@ -84,21 +84,28 @@ class CommunityLogCommentsFragment: Fragment() {
         override fun onCreateViewHolder(
             parent: ViewGroup,
             viewType: Int
-        ): CommunityLogCommentsFragment.MyCommentViewHolder {
+        ): MyCommentViewHolder {
             val inflater = LayoutInflater.from(parent.context)
             val binding = CommunityLogCommentsItemBinding.inflate(inflater, parent, false)
-            return CommunityLogCommentsFragment.MyCommentViewHolder(binding)
+            return MyCommentViewHolder(binding, this)
         }
 
-        override fun onBindViewHolder(holder: CommunityLogCommentsFragment.MyCommentViewHolder, position: Int) {
+        override fun onBindViewHolder(holder: MyCommentViewHolder, position: Int) {
             holder.bind(data[position])
         }
 
         override fun getItemCount(): Int = data.size
+
+        fun deleteItem(position: Int){
+            if (position != RecyclerView.NO_POSITION && position < data.size) {
+                data.removeAt(position)
+                notifyItemRemoved(position)
+            }
+        }
     }
 
     // Replace YourViewHolder with your own ViewHolder implementation
-    private class MyCommentViewHolder(private val binding: CommunityLogCommentsItemBinding) :
+    private class MyCommentViewHolder(private val binding: CommunityLogCommentsItemBinding,private val adapter: MyCommentAdapter) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: MyCommentModel) {
@@ -106,6 +113,15 @@ class CommunityLogCommentsFragment: Fragment() {
             binding.commentContent.text = item.commentContent
             binding.commentedPostTitle.text = item.commentedPostTitle
             binding.commentDate.text = item.commentDate
+
+            // Set OnClickListener for deleteBtn
+            binding.deleteBtn.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    // Call the deleteItem method in the adapter to delete the item
+                    adapter.deleteItem(position)
+                }
+            }
 
         }
 
