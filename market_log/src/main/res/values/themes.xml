@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    Custimize-->
+    <style name="Theme.SoluxsurroundBuyingRecord" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowFullscreen">true</item>   <!--  상단 상태바 안보이게-->
+
+    </style>
+</resources>
